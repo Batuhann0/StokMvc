@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MvcDbStokModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tbl_KATEGORILER">
+    <Key>
+      <PropertyRef Name="KATEGORIID" />
+    </Key>
+    <Property Name="KATEGORIID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KATEGORIAD" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tbl_MUSTERILER">
+    <Key>
+      <PropertyRef Name="MUSTERIID" />
+    </Key>
+    <Property Name="MUSTERIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MUSTERIAD" Type="varchar" MaxLength="50" />
+    <Property Name="MUSTERISOYAD" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tbl_SATISLAR">
+    <Key>
+      <PropertyRef Name="SATISID" />
+    </Key>
+    <Property Name="SATISID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="URUN" Type="int" />
+    <Property Name="MUSTERI" Type="int" />
+    <Property Name="ADET" Type="tinyint" />
+    <Property Name="FIYAT" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Tbl_URUNLER">
+    <Key>
+      <PropertyRef Name="URUNID" />
+    </Key>
+    <Property Name="URUNID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="URUNAD" Type="varchar" MaxLength="50" />
+    <Property Name="MARKA" Type="varchar" MaxLength="50" />
+    <Property Name="URUNKATEGORI" Type="smallint" />
+    <Property Name="FIYAT" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="STOK" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK_Tbl_SATISLAR_Tbl_MUSTERILER">
+    <End Role="Tbl_MUSTERILER" Type="Self.Tbl_MUSTERILER" Multiplicity="0..1" />
+    <End Role="Tbl_SATISLAR" Type="Self.Tbl_SATISLAR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_MUSTERILER">
+        <PropertyRef Name="MUSTERIID" />
+      </Principal>
+      <Dependent Role="Tbl_SATISLAR">
+        <PropertyRef Name="MUSTERI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_SATISLAR_Tbl_URUNLER">
+    <End Role="Tbl_URUNLER" Type="Self.Tbl_URUNLER" Multiplicity="0..1" />
+    <End Role="Tbl_SATISLAR" Type="Self.Tbl_SATISLAR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_URUNLER">
+        <PropertyRef Name="URUNID" />
+      </Principal>
+      <Dependent Role="Tbl_SATISLAR">
+        <PropertyRef Name="URUN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_URUNLER_Tbl_KATEGORILER">
+    <End Role="Tbl_KATEGORILER" Type="Self.Tbl_KATEGORILER" Multiplicity="0..1" />
+    <End Role="Tbl_URUNLER" Type="Self.Tbl_URUNLER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_KATEGORILER">
+        <PropertyRef Name="KATEGORIID" />
+      </Principal>
+      <Dependent Role="Tbl_URUNLER">
+        <PropertyRef Name="URUNKATEGORI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MvcDbStokModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_KATEGORILER" EntityType="Self.Tbl_KATEGORILER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_MUSTERILER" EntityType="Self.Tbl_MUSTERILER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_SATISLAR" EntityType="Self.Tbl_SATISLAR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_URUNLER" EntityType="Self.Tbl_URUNLER" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Tbl_SATISLAR_Tbl_MUSTERILER" Association="Self.FK_Tbl_SATISLAR_Tbl_MUSTERILER">
+      <End Role="Tbl_MUSTERILER" EntitySet="Tbl_MUSTERILER" />
+      <End Role="Tbl_SATISLAR" EntitySet="Tbl_SATISLAR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_SATISLAR_Tbl_URUNLER" Association="Self.FK_Tbl_SATISLAR_Tbl_URUNLER">
+      <End Role="Tbl_URUNLER" EntitySet="Tbl_URUNLER" />
+      <End Role="Tbl_SATISLAR" EntitySet="Tbl_SATISLAR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_URUNLER_Tbl_KATEGORILER" Association="Self.FK_Tbl_URUNLER_Tbl_KATEGORILER">
+      <End Role="Tbl_KATEGORILER" EntitySet="Tbl_KATEGORILER" />
+      <End Role="Tbl_URUNLER" EntitySet="Tbl_URUNLER" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

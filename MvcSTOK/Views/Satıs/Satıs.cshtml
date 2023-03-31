@@ -1,0 +1,56 @@
+﻿@model MvcSTOK.Models.Entity.Tbl_SATISLAR
+
+@{
+    ViewBag.Title = "Satıs";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal1">
+    Satış Yap
+</button>
+
+@*POPUP MODEL*@
+<div class="modal" id="Modal1">
+   
+    <div class="modal-dialog">
+        
+        <div class="modal-content">
+           
+            <div class="modal-header">
+               
+                <div class="modal-title">
+                    <h2 class="modal-title"> Satış Yapma Ekranı</h2>
+                </div>
+               
+                <form method="post" action="/Satıs/YeniSatis"> 
+                    <div class="modal-body">
+                        <label>Ürün Adı</label>
+                        @Html.TextBoxFor(s => s.URUN, new { @class = "form-control", @required = "" })
+
+                        <br />
+
+                        <label>Müşteri Adı Soyadı</label>
+                        @Html.TextBoxFor(s => s.MUSTERI, new { @class = "form-control" })
+
+                        <br />
+
+                        <label>Adet</label>
+                        @Html.TextBoxFor(s => s.ADET, new { @class = "form-control" })
+
+                        <br />
+
+                        <label>Fiyat</label>
+                        @Html.TextBoxFor(s => s.FIYAT, new { @class = "form-control" })
+
+                        <br />
+
+                        <button type="submit" class="btn btn-info">Satış İşlemi Yap</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Vazgeç</button>
+                    </div>
+                </form>
+          
+            </div>
+        </div>
+    </div>
+</div>
+
